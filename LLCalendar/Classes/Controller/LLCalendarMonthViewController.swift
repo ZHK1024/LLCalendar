@@ -16,6 +16,9 @@ open class LLCalendarMonthViewController: UIViewController {
     /// UICollectionView
     private let collectionView: UICollectionView
     
+    /// Weekday View
+    let weekdayView = LLCalendarWeekdayView()
+    
     /// ViewModel
     private let vm = LLCalendarMonthViewModel()
     
@@ -40,6 +43,8 @@ open class LLCalendarMonthViewController: UIViewController {
     
     // MARK: - UI
     private func setupUI() {
+        view.backgroundColor = .white
+        view.addSubview(weekdayView)
         view.addSubview(collectionView)
         flowLayout.minimumLineSpacing = 2
         flowLayout.minimumInteritemSpacing = 2
@@ -47,7 +52,6 @@ open class LLCalendarMonthViewController: UIViewController {
         flowLayout.itemSize = CGSize(width: w, height: w)
         flowLayout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 2)
         
-//        print(vm.calendar)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -56,20 +60,24 @@ open class LLCalendarMonthViewController: UIViewController {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        recalCollectionViewFrame()
+        recalViewsFrame()
     }
     
     open override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        recalCollectionViewFrame()
+        recalViewsFrame()
     }
     
     ///  重新计算 `CollectionView` 的 `frame`
-    private func recalCollectionViewFrame() {
-        collectionView.frame = CGRect(x: view.safeAreaInsets.left,
-                                      y: view.safeAreaInsets.top,
-                                      width: view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right,
-                                      height: view.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom)
+    private func recalViewsFrame() {
+        weekdayView.frame = CGRect(x: view.safeAreaInsets.left,
+                                   y: view.safeAreaInsets.top,
+                                   width: view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right,
+                                   height: 40.0)
+        collectionView.frame = CGRect(x: weekdayView.frame.minX,
+                                      y: weekdayView.frame.maxY,
+                                      width: weekdayView.frame.width,
+                                      height: view.bounds.height - weekdayView.frame.maxY - view.safeAreaInsets.bottom)
     }
 }
 

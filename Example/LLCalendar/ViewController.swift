@@ -15,7 +15,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
-        _ = LLCalendarMonthViewModel()
+        let calander = Calendar(identifier: .chinese)
+//        print(calander.quarterSymbols)
+        let cmps = calander.dateComponents([.month, .day], from: Date())
+        print(cmps.month, cmps.day)
     }
 
     override func didReceiveMemoryWarning() {
