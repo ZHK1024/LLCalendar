@@ -1,5 +1,4 @@
 import XCTest
-import LLCalendar
 
 class Tests: XCTestCase {
     
