@@ -22,14 +22,9 @@ open class LLCalendarMonthViewModel {
         guard var firstDate = calendar.date(from: DateComponents(year: year)) else {
             return
         }
-////        print(firstDate)
-////
-//        let formatter = DateFormatter()
-////
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss EEEE"
-//
-        var months: [LLCalendar.Month] = []
 
+        /// 计算每个月日期数据
+        var months: [LLCalendar.Month] = []
         calendar.range(of: .month, in: .year, for: firstDate)?.forEach({ month in
             var days: [LLCalendar.Day] = []
             let weekday = calendar.component(.weekday, from: firstDate) - 1
@@ -40,18 +35,8 @@ open class LLCalendarMonthViewModel {
             })
             months.append(LLCalendar.Month(offset: weekday, days: days))
         })
-        
         self.calendar = months
     }
     
     static let CanendarPath = NSHomeDirectory() + "/Library/LLCalendar/\(Date().year())"
-}
-
-extension Date {
-    
-    public func year() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy"
-        return formatter.string(from: self)
-    }
 }
