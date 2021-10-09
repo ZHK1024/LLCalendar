@@ -14,11 +14,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        let calander = Calendar(identifier: .chinese)
-//        print(calander.quarterSymbols)
-        let cmps = calander.dateComponents([.month, .day], from: Date())
-        print(cmps.month, cmps.day)
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,7 +23,7 @@ class ViewController: UIViewController {
 
     @IBAction func rightItemActon(_ sender: UIBarButtonItem) {
         navigationController?.pushViewController([
-            LLCalendarYearViewController(),
+//            LLCalendarYearViewController(),
             LLCalendarMonthViewController(date: Date())
         ], animated: true)
     }

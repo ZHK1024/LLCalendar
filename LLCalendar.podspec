@@ -32,11 +32,11 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'LLCalendar/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'LLCalendar' => ['LLCalendar/Assets/*.png']
-  # }
+   s.resource_bundles = {
+     'LLCalendar' => ['LLCalendar/Assets/*.strings']
+   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+   s.dependency 'LLGeneral', '~> 0.4.1'
 end

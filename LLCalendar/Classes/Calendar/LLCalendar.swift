@@ -26,7 +26,9 @@ extension LLCalendar {
     
     struct Day: Codable {
         
-        let name: String
+        let gregorian: String
+        
+        let chinese: String
         
     }
 }

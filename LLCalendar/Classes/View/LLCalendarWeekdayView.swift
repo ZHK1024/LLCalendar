@@ -8,7 +8,9 @@
 
 import UIKit
 
-class LLCalendarWeekdayView: UIStackView {
+class LLCalendarWeekdayView: UIView {
+    
+    private let stackView = UIStackView()
     
     // MARK: - Init
     
@@ -25,11 +27,24 @@ class LLCalendarWeekdayView: UIStackView {
     
     private func setupUI() {
         backgroundColor = .white
-        distribution = .fillEqually
+        addSubview(stackView)
+        stackView.distribution = .fillEqually
         
-        Calendar.current.shortWeekdaySymbols.forEach { text in
-            addArrangedSubview(UILabel(text: text))
+//        Calendar.current.shortWeekdaySymbols.forEach { text in
+        ["日", "一", "二", "三", "四", "五", "六"].forEach { text in
+            stackView.addArrangedSubview(UILabel(text: NSLocalizedString(text, comment: text)))
         }
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = .zero
+        layer.shadowOpacity = 0.2
+
+//        clipsToBounds = false
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        stackView.frame = bounds
     }
     
     private func label() -> UILabel {

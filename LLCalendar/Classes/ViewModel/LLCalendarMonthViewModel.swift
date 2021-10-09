@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import LLGeneral
 
 open class LLCalendarMonthViewModel {
     
@@ -17,7 +18,10 @@ open class LLCalendarMonthViewModel {
     }
     
     private func initDataCalendar() throws {
+        
+        
         let calendar = Calendar.current
+        let chineseCalendar = Calendar(identifier: .chinese)
         let year = calendar.component(.year, from: Date())
         guard var firstDate = calendar.date(from: DateComponents(year: year)) else {
             return
@@ -29,7 +33,8 @@ open class LLCalendarMonthViewModel {
             var days: [LLCalendar.Day] = []
             let weekday = calendar.component(.weekday, from: firstDate) - 1
             calendar.range(of: .day, in: .month, for: firstDate)?.forEach({ day in
-                days.append(LLCalendar.Day(name: "\(calendar.component(.day, from: firstDate))"))
+                days.append(LLCalendar.Day(gregorian: "\(calendar.component(.day, from: firstDate))",
+                                           chinese: chineseDay(calendar: chineseCalendar, date: firstDate)))
                 /// 增加一天 `86400 = 3600 * 24`
                 firstDate.addTimeInterval(86400)
             })
@@ -38,5 +43,18 @@ open class LLCalendarMonthViewModel {
         self.calendar = months
     }
     
-    static let CanendarPath = NSHomeDirectory() + "/Library/LLCalendar/\(Date().year())"
+    private func chineseDay(calendar: Calendar, date: Date) -> String {
+        let day = calendar.component(.day, from: date)
+        if day == 1 {
+            let month = calendar.component(.month, from: date)
+            return Self.chineseMonth[month]
+        }
+        return "\(Self.chineseDay[day])"
+    }
+    
+    @SourceDecodable(.plist, .mainBundle , "/ChineseDays.plist", [])
+    static var chineseDay: [String]
+    
+    @SourceDecodable(.plist, .mainBundle , "/ChineseMonth.plist", [])
+    static var chineseMonth: [String]
 }

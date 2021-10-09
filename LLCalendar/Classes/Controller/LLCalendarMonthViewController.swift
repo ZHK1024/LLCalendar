@@ -43,19 +43,25 @@ open class LLCalendarMonthViewController: UIViewController {
     
     // MARK: - UI
     private func setupUI() {
+        title = "日历"
         view.backgroundColor = .white
-        view.addSubview(weekdayView)
+        
         view.addSubview(collectionView)
-        flowLayout.minimumLineSpacing = 2
-        flowLayout.minimumInteritemSpacing = 2
-        let w = floor((UIScreen.main.bounds.width - 16.0) / 7.0)
+        view.addSubview(weekdayView)
+        
+        flowLayout.minimumLineSpacing = 3
+        flowLayout.minimumInteritemSpacing = 3
+        let w = floor((UIScreen.main.bounds.width - 24.0) / 7.0)
         flowLayout.itemSize = CGSize(width: w, height: w)
         flowLayout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 2)
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+        collectionView.backgroundColor = .white
+        collectionView.contentInset = UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0)
         collectionView.reloadData()
+        
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     open override func viewDidLayoutSubviews() {
@@ -73,7 +79,7 @@ open class LLCalendarMonthViewController: UIViewController {
         weekdayView.frame = CGRect(x: view.safeAreaInsets.left,
                                    y: view.safeAreaInsets.top,
                                    width: view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right,
-                                   height: 40.0)
+                                   height: 50.0)
         collectionView.frame = CGRect(x: weekdayView.frame.minX,
                                       y: weekdayView.frame.maxY,
                                       width: weekdayView.frame.width,
