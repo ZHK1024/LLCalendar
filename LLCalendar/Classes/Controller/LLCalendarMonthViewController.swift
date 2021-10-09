@@ -27,6 +27,7 @@ open class LLCalendarMonthViewController: UIViewController {
     public init(date: Date) {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.register(LLCalendarMonthViewCell.self, forCellWithReuseIdentifier: LLCalendarMonthViewCell.identifier)
+        collectionView.register(LLCalendarMonthHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: LLCalendarMonthHeaderView.identifier)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -53,8 +54,9 @@ open class LLCalendarMonthViewController: UIViewController {
         flowLayout.minimumInteritemSpacing = 3
         let w = floor((UIScreen.main.bounds.width - 24.0) / 7.0)
         flowLayout.itemSize = CGSize(width: w, height: w)
+        flowLayout.headerReferenceSize = CGSize(width: 0.0, height: 60.0)
         flowLayout.sectionInset = UIEdgeInsets(top: 2, left: 2, bottom: 0, right: 2)
-        
+        print(w)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .white
@@ -62,6 +64,31 @@ open class LLCalendarMonthViewController: UIViewController {
         collectionView.reloadData()
         
         navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let month = Calendar.current.component(.month, from: Date())
+        if let date = Calendar.current.date(from: DateComponents(year: 2021, month: month)) {
+            let week = Calendar.current.component(.weekOfYear, from: date)
+            let of = CGFloat(week) * (flowLayout.itemSize.height + 3.0) + CGFloat(month) * 60.0
+            collectionView.contentOffset = CGPoint(x: 0, y: of)
+            
+            print(of, flowLayout.itemSize.height)
+        }
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let month = Calendar.current.component(.month, from: Date())
+        if let date = Calendar.current.date(from: DateComponents(year: 2021, month: month)) {
+            let week = Calendar.current.component(.weekOfYear, from: date)
+            let of = CGFloat(week) * (flowLayout.itemSize.height + 3.0) + CGFloat(month) * 60.0
+//            collectionView.contentOffset = CGPoint(x: 0, y: of)
+            print(date, month)
+            collectionView.setContentOffset(CGPoint(x: 0, y: of), animated: true)
+            print(of)
+        }
     }
     
     open override func viewDidLayoutSubviews() {
@@ -90,12 +117,10 @@ open class LLCalendarMonthViewController: UIViewController {
 extension LLCalendarMonthViewController: UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print(vm.calendar.count)
         return vm.calendar.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return vm.calendar[section].count
     }
     
@@ -108,6 +133,12 @@ extension LLCalendarMonthViewController: UICollectionViewDataSource {
             cell.day = nil
         }
         return cell
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: LLCalendarMonthHeaderView.identifier, for: indexPath) as! LLCalendarMonthHeaderView
+        header.label.text = "\(indexPath.section + 1) 月"
+        return header
     }
 }
 
