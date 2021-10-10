@@ -45,16 +45,11 @@ open class LLCalendarMonthViewModel {
     
     private func chineseDay(calendar: Calendar, date: Date) -> String {
         let day = calendar.component(.day, from: date)
+        let month = calendar.component(.month, from: date)
         if day == 1 {
-            let month = calendar.component(.month, from: date)
-            return Self.chineseMonth[month]
+            
+            return LLCalendar.chineseMonth[month]
         }
-        return "\(Self.chineseDay[day])"
+        return "\(LLCalendar.chineseDay[day])"
     }
-    
-    @SourceDecodable(.plist, .mainBundle , "/ChineseDays.plist", [])
-    static var chineseDay: [String]
-    
-    @SourceDecodable(.plist, .mainBundle , "/ChineseMonth.plist", [])
-    static var chineseMonth: [String]
 }

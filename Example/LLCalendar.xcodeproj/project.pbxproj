@@ -18,6 +18,7 @@
 		91DBBD1327117CFE00D80B00 /* ChineseDays.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91DBBD1227117CFE00D80B00 /* ChineseDays.plist */; };
 		A898E3E3DAA67390C3B523B9 /* Pods_LLCalendar_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 867A84B40FF774FDE74196AB /* Pods_LLCalendar_Example.framework */; };
 		C4E3E9CD0695A7F73F9BE311 /* Pods_LLCalendar_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A29CDF67D6380361F5B1074 /* Pods_LLCalendar_Tests.framework */; };
+		D1CE64A62712EA3900FFE13A /* ChineseFestival.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1CE64A52712EA3900FFE13A /* ChineseFestival.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		A97AFAD6CBADC269C06685CF /* LLCalendar.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = LLCalendar.podspec; path = ../LLCalendar.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AB83E420B2A78AB7B9685FE9 /* Pods-LLCalendar_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLCalendar_Tests.debug.xcconfig"; path = "Target Support Files/Pods-LLCalendar_Tests/Pods-LLCalendar_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C0E55ED22575DF30A56E9BE2 /* Pods-LLCalendar_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLCalendar_Example.debug.xcconfig"; path = "Target Support Files/Pods-LLCalendar_Example/Pods-LLCalendar_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		D1CE64A52712EA3900FFE13A /* ChineseFestival.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ChineseFestival.plist; sourceTree = "<group>"; };
 		D4D6573B5762C3AF2C6258B1 /* Pods-LLCalendar_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LLCalendar_Tests.release.xcconfig"; path = "Target Support Files/Pods-LLCalendar_Tests/Pods-LLCalendar_Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +128,7 @@
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				91DBBD1027117A5C00D80B00 /* ChineseMonth.plist */,
 				91DBBD1227117CFE00D80B00 /* ChineseDays.plist */,
+				D1CE64A52712EA3900FFE13A /* ChineseFestival.plist */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				91A19DE927113F4C0010354B /* Localizable.strings */,
@@ -265,6 +268,7 @@
 				91A19DE727113F4C0010354B /* Localizable.strings in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				91DBBD1327117CFE00D80B00 /* ChineseDays.plist in Resources */,
+				D1CE64A62712EA3900FFE13A /* ChineseFestival.plist in Resources */,
 				91DBBD1127117A5C00D80B00 /* ChineseMonth.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
