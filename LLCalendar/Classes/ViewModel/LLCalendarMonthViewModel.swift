@@ -18,8 +18,6 @@ open class LLCalendarMonthViewModel {
     }
     
     private func initDataCalendar() throws {
-        
-        
         let calendar = Calendar.current
         let chineseCalendar = Calendar(identifier: .chinese)
         let year = calendar.component(.year, from: Date())

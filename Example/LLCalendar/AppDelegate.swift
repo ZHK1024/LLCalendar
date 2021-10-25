@@ -16,7 +16,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+//        let month = Calendar.current.component(.month, from: Date())
+//        print(nums.dropLast(nums.count - month + 1))
+//        print(nums)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        
+        let date = formatter.date(from: "2021-1-01 00:00:00")!
+        print(date)
+        print(first(date))
+        
         return true
+    }
+    
+    func first(_ date: Date) -> [Int] {
+        let nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        let month = Calendar.current.component(.month, from: date)
+        print(month)
+        return nums.dropLast(nums.count - month + 1)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

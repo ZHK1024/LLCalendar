@@ -22,6 +22,17 @@ open class LLCalendarMonthViewController: UIViewController {
     /// ViewModel
     private let vm = LLCalendarMonthViewModel()
     
+    /// 纵轴偏移量
+    private var offsetY: CGFloat {
+        let currentMonth = Calendar.current.component(.month, from: Date())
+        let pastMonths = vm.calendar.dropLast(vm.calendar.count - currentMonth + 1)
+        return pastMonths.reduce(CGFloat(0), {
+            /// 当前分区占用行数 (向上取整)
+            let rowCount = ceil(CGFloat($1.count) / 7)
+            return $0 + rowCount * (flowLayout.itemSize.height) + (rowCount - 1) * 3.0 + 62.0
+        })
+    }
+    
     // MARK: - Init
     
     public init(date: Date) {
@@ -66,34 +77,10 @@ open class LLCalendarMonthViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let month = Calendar.current.component(.month, from: Date())
-        if let date = Calendar.current.date(from: DateComponents(year: 2021, month: month)) {
-            let week = Calendar.current.component(.weekOfYear, from: date)
-            let of = CGFloat(week) * (flowLayout.itemSize.height + 3.0) + CGFloat(month) * 60.0
-            collectionView.contentOffset = CGPoint(x: 0, y: of)
-            
-            print(of, flowLayout.itemSize.height)
-        }
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let month = Calendar.current.component(.month, from: Date())
-        if let date = Calendar.current.date(from: DateComponents(year: 2021, month: month)) {
-            let week = Calendar.current.component(.weekOfYear, from: date)
-            let of = CGFloat(week) * (flowLayout.itemSize.height + 3.0) + CGFloat(month) * 60.0
-//            collectionView.contentOffset = CGPoint(x: 0, y: of)
-            print(date, month)
-            collectionView.setContentOffset(CGPoint(x: 0, y: of), animated: true)
-            print(of)
-        }
-    }
-    
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         recalViewsFrame()
+        collectionView.setContentOffset(CGPoint(x: 0, y: offsetY), animated: false)
     }
     
     open override func viewSafeAreaInsetsDidChange() {
