@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        try? LLCalendar.makeCalendarData(year: 2021)
     }
 
     override func didReceiveMemoryWarning() {

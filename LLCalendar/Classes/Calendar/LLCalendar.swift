@@ -12,8 +12,6 @@ import LLGeneral
 /// 日历对象
 public struct LLCalendar {
     
-    
-    
     /// 农历日期符号数组
     @SourceDecodable(.plist, .mainBundle , "/ChineseDays.plist", [])
     static var chineseDay: [String]
@@ -36,6 +34,61 @@ public struct LLCalendar {
 
 extension LLCalendar {
     
+    public func calculate() {
+        
+    }
+    
+    public static func makeCalendarData(year: Int) throws {
+        /// 公历
+        let calendar = Calendar.current
+        /// 农历
+        let chineseCalendar = Calendar(identifier: .chinese)
+        guard var firstDate = calendar.date(from: DateComponents(year: year)) else {
+            return
+        }
+
+        /// 计算每个月日期数据
+        var months: [LLCalendar.Month] = []
+        calendar.range(of: .month, in: .year, for: firstDate)?.forEach({ month in
+            var days: [LLCalendar.Day] = []
+            let weekday = calendar.component(.weekday, from: firstDate) - 1
+            calendar.range(of: .day, in: .month, for: firstDate)?.forEach({ day in
+                days.append(LLCalendar.Day(gregorian: "\(calendar.component(.day, from: firstDate))",
+                                           chinese: chineseDay(calendar: chineseCalendar, date: firstDate)))
+                /// 增加一天 `86400 = 3600 * 24`
+                firstDate.addTimeInterval(86400)
+            })
+            months.append(LLCalendar.Month(offset: weekday, days: days))
+        })
+        
+        print(LLCalendar.festival)
+        let set = LLCalendar.festival.reduce(into: [String:Festival]()) {
+//            guard let fest = $1.chinese ? try? $1.transform(to: .gregorian) : $1 else { return }
+            $0["\($1.month)-\($1.day)"] = $1
+        }
+        print(set)
+    }
+    
+    private static func chineseDay(calendar: Calendar, date: Date) -> String {
+        let day = calendar.component(.day, from: date)
+        let month = calendar.component(.month, from: date)
+        if day == 1 {
+            return LLCalendar.chineseMonth[month]
+        }
+        return "\(LLCalendar.chineseDay[day])"
+    }
+}
+
+extension LLCalendar {
+    
+    struct Year: Codable {
+        
+        let months: [Month]
+    }
+}
+
+extension LLCalendar {
+    
     struct Month: Codable {
         
         
@@ -54,6 +107,9 @@ extension LLCalendar {
         /// 本月总格数 (空白格 + 日期数)
         var count: Int { offset + days.count }
     }
+}
+
+extension LLCalendar {
     
     struct Day: Codable {
         
@@ -62,8 +118,18 @@ extension LLCalendar {
         
         /// 农历
         let chinese: String
-        
     }
+    
+    /// 日期标签
+    enum Tag {
+        case none   /// 无标签
+        case work   /// 上班
+        case rest   /// 休息
+    }
+}
+
+
+extension LLCalendar {
     
     /// 节日
     struct Festival: Decodable {
@@ -117,13 +183,4 @@ extension LLCalendar {
             case chinese    /// 农历
         }
     }
-    
-    /// 日期标签
-    enum Tag {
-        case none   /// 无标签
-        case work   /// 上班
-        case rest   /// 休息
-    }
-    
-    
 }
